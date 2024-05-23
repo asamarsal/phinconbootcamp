@@ -171,14 +171,20 @@ class _PokemonlistPageState extends State<PokemonlistPage> {
                 ),
               ),
               Container(
-                color: Colors.blue,
                 child: isLoadingDropdown
                     ? Center(child: CircularProgressIndicator())
                     : Column(
-                  children: [
-                    Padding(
+                    children: [
+                      Padding(
                       padding: EdgeInsets.symmetric(horizontal: 20),
                       child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(
+                            color: Colors.black,
+                            width: 1.0,
+                          ),
+                        ),
                         child: DropdownButtonHideUnderline(
                           child: DropdownButton2<String>(
                             isExpanded: true,
@@ -263,13 +269,16 @@ class _PokemonlistPageState extends State<PokemonlistPage> {
                   ],
                 ),
               ),
-              const Text(
-                'Nama Pokemon',
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w400,
-                  fontSize: 20.0,
+              const Padding(
+                padding: EdgeInsets.only(top: 5.0, bottom: 5.0),
+                child: Text(
+                  'Nama Pokemon',
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 20.0,
+                  ),
                 ),
               ),
               Expanded(
@@ -282,10 +291,18 @@ class _PokemonlistPageState extends State<PokemonlistPage> {
                         height: 70.0,
                           margin: const EdgeInsets.symmetric(
                               horizontal: 10, vertical: 5),
-                          decoration: BoxDecoration(
-                            color: Colors.blue,
+                        decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                          ),
+                            gradient: LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: [
+                                  Colors.lightBlue.shade100,
+                                  Colors.lightBlue.shade500,
+                                  Colors.lightBlue.shade900
+                                ]
+                            )
+                        ),
                         child: FutureBuilder<String>(
                           future: fetchPokemonImageUrl(listViewItems[index]['url']),
                           builder: (context, snapshot) {
