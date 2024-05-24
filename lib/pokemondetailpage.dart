@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:page_route_transition/page_route_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -30,6 +31,20 @@ class _PokemonDetailState extends State<PokemonDetail> {
   void initState() {
     super.initState();
     _loadPokemonData();
+  }
+
+  final AudioPlayer _audioPlayer = AudioPlayer();
+
+  void _playNetworkAudio() {
+    _audioPlayer.play(
+      UrlSource('https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/1000.ogg'),
+    );
+  }
+
+  @override
+  void dispose() {
+    _audioPlayer.dispose();
+    super.dispose();
   }
 
   @override
@@ -80,6 +95,7 @@ class _PokemonDetailState extends State<PokemonDetail> {
                         Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
+                            border: Border.all(),
                             gradient: LinearGradient(
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomRight,
@@ -191,7 +207,59 @@ class _PokemonDetailState extends State<PokemonDetail> {
                                   )
                                 ],
                               ),
+                              SizedBox(height: 15.0,),
                             ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(),
+                              color: Colors.lightBlue.shade100,
+                            ),
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(left: 10.0, right: 10.0),
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            'Suara Pokemon  :',
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 18,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                SizedBox(height: 5.0,),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(left: 10.0, right: 10.0),
+                                      child: Column(
+                                        children: [
+                                          ElevatedButton(
+                                            onPressed: _playNetworkAudio,
+                                            child: const Text('Suara 1'),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ],
