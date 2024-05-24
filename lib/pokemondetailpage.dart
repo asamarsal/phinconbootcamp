@@ -17,6 +17,7 @@ class _PokemonDetailState extends State<PokemonDetail> {
   String pokemonWeight = '';
   String pokemonHeight = '';
   String pokemonVoice = '';
+  String pokemonVoicetwo = '';
 
   Future<void> _loadPokemonData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -25,6 +26,7 @@ class _PokemonDetailState extends State<PokemonDetail> {
       pokemonWeight = prefs.getString('pokemon_weight') ?? 'Unknown';
       pokemonHeight = prefs.getString('pokemon_height') ?? 'Unknown';
       pokemonVoice = prefs.getString('pokemon_voice') ?? 'Unknown';
+      pokemonVoicetwo = prefs.getString('pokemon_voicetwo') ?? 'Unknown';
       pokemonImage = prefs.getString('pokemon_image') ?? '';
     });
   }
@@ -40,6 +42,12 @@ class _PokemonDetailState extends State<PokemonDetail> {
   void _playNetworkAudio() {
     _audioPlayer.play(
       UrlSource(pokemonVoice),
+    );
+  }
+
+  void _playNetworkAudiotwo() {
+    _audioPlayer.play(
+      UrlSource(pokemonVoicetwo),
     );
   }
 
@@ -248,7 +256,7 @@ class _PokemonDetailState extends State<PokemonDetail> {
                                   children: [
                                     Padding(
                                       padding: EdgeInsets.only(left: 10.0, right: 10.0, bottom: 10.0,),
-                                      child: Column(
+                                      child: Row(
                                         children: [
                                           ElevatedButton(
                                             style: ElevatedButton.styleFrom(
@@ -258,6 +266,16 @@ class _PokemonDetailState extends State<PokemonDetail> {
                                             ),
                                             onPressed: _playNetworkAudio,
                                             child: const Text('Suara 1'),
+                                          ),
+                                          SizedBox(width: 10.0,),
+                                          ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius: BorderRadius.circular(8)
+                                              ),
+                                            ),
+                                            onPressed: _playNetworkAudiotwo,
+                                            child: const Text('Suara 2'),
                                           ),
                                         ],
                                       ),
