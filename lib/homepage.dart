@@ -145,14 +145,24 @@ class _PokemonlistPageState extends State<PokemonlistPage> {
       throw Exception('Failed to load Pokemon weight');
     }
   }
+  Future<String> fetchPokemonVoices(String url) async {
+    final response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      return data['cries']['latest'];
+    } else {
+      throw Exception('Failed to load Pokemon voice');
+    }
+  }
 
-  Future<void> savePokemonData(String name, String imageUrl, String weight, String height) async {
+
+  Future<void> savePokemonData(String name, String imageUrl, String weight, String height, String voice) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('pokemon_name', name);
     await prefs.setString('pokemon_image', imageUrl);
     await prefs.setString('pokemon_weight', weight);
     await prefs.setString('pokemon_height', height);
-
+    await prefs.setString('pokemon_voice', voice);
   }
 
   @override
@@ -324,8 +334,9 @@ class _PokemonlistPageState extends State<PokemonlistPage> {
                           String imageUrl = await fetchPokemonImageUrl(listViewItems[index]['url']);
                           String weight = await fetchPokemonWeights(listViewItems[index]['url']);
                           String height = await fetchPokemonHeights(listViewItems[index]['url']);
+                          String voice = await fetchPokemonVoices(listViewItems[index]['url']);
 
-                          await savePokemonData(name, imageUrl, weight, height);
+                          await savePokemonData(name, imageUrl, weight, height, voice);
 
                           Navigator.push(
                             context,

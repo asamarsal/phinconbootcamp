@@ -16,6 +16,7 @@ class _PokemonDetailState extends State<PokemonDetail> {
   String pokemonImage = '';
   String pokemonWeight = '';
   String pokemonHeight = '';
+  String pokemonVoice = '';
 
   Future<void> _loadPokemonData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -23,6 +24,7 @@ class _PokemonDetailState extends State<PokemonDetail> {
       pokemonName = prefs.getString('pokemon_name') ?? 'Unknown';
       pokemonWeight = prefs.getString('pokemon_weight') ?? 'Unknown';
       pokemonHeight = prefs.getString('pokemon_height') ?? 'Unknown';
+      pokemonVoice = prefs.getString('pokemon_voice') ?? 'Unknown';
       pokemonImage = prefs.getString('pokemon_image') ?? '';
     });
   }
@@ -37,7 +39,7 @@ class _PokemonDetailState extends State<PokemonDetail> {
 
   void _playNetworkAudio() {
     _audioPlayer.play(
-      UrlSource('https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/1000.ogg'),
+      UrlSource(pokemonVoice),
     );
   }
 
@@ -221,11 +223,11 @@ class _PokemonDetailState extends State<PokemonDetail> {
                             ),
                             child: Column(
                               children: [
-                                Row(
+                                const Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     Padding(
-                                      padding: EdgeInsets.only(left: 10.0, right: 10.0),
+                                      padding: EdgeInsets.only(left: 10.0, right: 10.0, top: 10.0),
                                       child: Row(
                                         children: [
                                           Text(
@@ -241,15 +243,19 @@ class _PokemonDetailState extends State<PokemonDetail> {
                                     )
                                   ],
                                 ),
-                                SizedBox(height: 5.0,),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     Padding(
-                                      padding: EdgeInsets.only(left: 10.0, right: 10.0),
+                                      padding: EdgeInsets.only(left: 10.0, right: 10.0, bottom: 10.0,),
                                       child: Column(
                                         children: [
                                           ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.circular(8)
+                                              ),
+                                            ),
                                             onPressed: _playNetworkAudio,
                                             child: const Text('Suara 1'),
                                           ),
