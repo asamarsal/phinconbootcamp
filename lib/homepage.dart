@@ -5,6 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:http/http.dart' as http;
+import 'package:phinconbootcamp/pokemondetailpage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -123,6 +125,12 @@ class _PokemonlistPageState extends State<PokemonlistPage> {
     } else {
       throw Exception('Failed to load Pokemon image');
     }
+  }
+
+  Future<void> savePokemonData(String name, String imageUrl) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('pokemon_name', name);
+    await prefs.setString('pokemon_image', imageUrl);
   }
 
   @override
@@ -287,63 +295,80 @@ class _PokemonlistPageState extends State<PokemonlistPage> {
                   : ListView.builder(
                     itemCount: listViewItems.length,
                     itemBuilder: (context, index) {
-                      return Container(
-                        height: 70.0,
+                      return GestureDetector(
+                        onTap: () async {
+
+                          String name = listViewItems[index]['name'];
+                          String imageUrl = await fetchPokemonImageUrl(listViewItems[index]['url']);
+
+                          await savePokemonData(name, imageUrl);
+
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => PokemonDetail()
+                            ),
+                          );
+                        },
+
+                        child: Container(
+                          height: 70.0,
                           margin: const EdgeInsets.symmetric(
                               horizontal: 10, vertical: 5),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            gradient: LinearGradient(
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                                colors: [
-                                  Colors.lightBlue.shade100,
-                                  Colors.lightBlue.shade500,
-                                  Colors.lightBlue.shade900
-                                ]
-                            )
-                        ),
-                        child: FutureBuilder<String>(
-                          future: fetchPokemonImageUrl(listViewItems[index]['url']),
-                          builder: (context, snapshot) {
-                            if (snapshot.connectionState == ConnectionState.waiting) {
-                              return ListTile(
-                                title: Text(listViewItems[index]['name']),
-                                leading: CircularProgressIndicator(),
-                              );
-                            } else if (snapshot.hasError) {
-                              return ListTile(
-                                title: Text(listViewItems[index]['name']),
-                                leading: Icon(Icons.error),
-                              );
-                            } else {
-                              return ListTile(
-                                title: Row(
-                                  children: [
-                                    Image.network(
-                                      snapshot.data ?? '',
-                                      width: 50,
-                                      height: 50,
-                                    ),
-                                    Spacer(),
-                                    Text(
-                                      listViewItems[index]['name'],
-                                      style: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w400,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              gradient: LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: [
+                                    Colors.lightBlue.shade100,
+                                    Colors.lightBlue.shade500,
+                                    Colors.lightBlue.shade900
+                                  ]
+                              )
+                          ),
+                          child: FutureBuilder<String>(
+                            future: fetchPokemonImageUrl(listViewItems[index]['url']),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState == ConnectionState.waiting) {
+                                return ListTile(
+                                  title: Text(listViewItems[index]['name']),
+                                  leading: CircularProgressIndicator(),
+                                );
+                              } else if (snapshot.hasError) {
+                                return ListTile(
+                                  title: Text(listViewItems[index]['name']),
+                                  leading: Icon(Icons.error),
+                                );
+                              } else {
+                                return ListTile(
+                                  title: Row(
+                                    children: [
+                                      Image.network(
+                                        snapshot.data ?? '',
+                                        width: 50,
+                                        height: 50,
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            }
-                          },
+                                      Spacer(),
+                                      Text(
+                                        listViewItems[index]['name'],
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              }
+                            },
+                          ),
                         ),
                       );
                 },
               ),
-            ),
+              ),
           ],
         ),
         ),
