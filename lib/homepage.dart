@@ -103,7 +103,7 @@ class _PokemonlistPageState extends State<PokemonlistPage> {
   }
 
   Future<void> fetchListViewData() async {
-    final response = await http.get(Uri.parse('https://pokeapi.co/api/v2/pokemon?limit=1000')); // Change limit as per your requirement
+    final response = await http.get(Uri.parse('https://pokeapi.co/api/v2/pokemon?limit=1000'));
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
@@ -127,10 +127,32 @@ class _PokemonlistPageState extends State<PokemonlistPage> {
     }
   }
 
-  Future<void> savePokemonData(String name, String imageUrl) async {
+  Future<String> fetchPokemonWeights(String url) async {
+    final response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      return data['weight'].toString();
+    } else {
+      throw Exception('Failed to load Pokemon weight');
+    }
+  }
+  Future<String> fetchPokemonHeights(String url) async {
+    final response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      return data['height'].toString();
+    } else {
+      throw Exception('Failed to load Pokemon weight');
+    }
+  }
+
+  Future<void> savePokemonData(String name, String imageUrl, String weight, String height) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('pokemon_name', name);
     await prefs.setString('pokemon_image', imageUrl);
+    await prefs.setString('pokemon_weight', weight);
+    await prefs.setString('pokemon_height', height);
+
   }
 
   @override
@@ -300,8 +322,10 @@ class _PokemonlistPageState extends State<PokemonlistPage> {
 
                           String name = listViewItems[index]['name'];
                           String imageUrl = await fetchPokemonImageUrl(listViewItems[index]['url']);
+                          String weight = await fetchPokemonWeights(listViewItems[index]['url']);
+                          String height = await fetchPokemonHeights(listViewItems[index]['url']);
 
-                          await savePokemonData(name, imageUrl);
+                          await savePokemonData(name, imageUrl, weight, height);
 
                           Navigator.push(
                             context,
@@ -325,7 +349,7 @@ class _PokemonlistPageState extends State<PokemonlistPage> {
                                     Colors.lightBlue.shade500,
                                     Colors.lightBlue.shade900
                                   ]
-                              )
+                              ),
                           ),
                           child: FutureBuilder<String>(
                             future: fetchPokemonImageUrl(listViewItems[index]['url']),

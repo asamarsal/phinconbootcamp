@@ -13,11 +13,15 @@ class _PokemonDetailState extends State<PokemonDetail> {
 
   String pokemonName = '';
   String pokemonImage = '';
+  String pokemonWeight = '';
+  String pokemonHeight = '';
 
   Future<void> _loadPokemonData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       pokemonName = prefs.getString('pokemon_name') ?? 'Unknown';
+      pokemonWeight = prefs.getString('pokemon_weight') ?? 'Unknown';
+      pokemonHeight = prefs.getString('pokemon_height') ?? 'Unknown';
       pokemonImage = prefs.getString('pokemon_image') ?? '';
     });
   }
@@ -74,6 +78,20 @@ class _PokemonDetailState extends State<PokemonDetail> {
                         ),
                         SizedBox(height: 20.0,),
                         Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            gradient: LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: [
+                                  Colors.lightBlue.shade500,
+                                  Colors.lightBlue.shade200,
+                                  Colors.lightBlue.shade50,
+                                  Colors.lightBlue.shade200,
+                                  Colors.lightBlue.shade500
+                                ]
+                            ),
+                          ),
                           width: 200.0,
                           height: 200.0,
                           child: pokemonImage.isNotEmpty
@@ -122,7 +140,7 @@ class _PokemonDetailState extends State<PokemonDetail> {
                                     child: Row(
                                       children: [
                                         Text(
-                                          'Nama Pokemon  :',
+                                          'Berat Pokemon  :',
                                           style: TextStyle(
                                             color: Colors.black,
                                             fontWeight: FontWeight.w400,
@@ -131,8 +149,8 @@ class _PokemonDetailState extends State<PokemonDetail> {
                                         ),
                                         SizedBox(width: 10.0,),
                                         Text(
-                                          'Charizard',
-                                          style: TextStyle(
+                                          '${pokemonWeight} pounds',
+                                          style: const TextStyle(
                                             color: Colors.black,
                                             fontWeight: FontWeight.w400,
                                             fontSize: 18,
@@ -148,11 +166,11 @@ class _PokemonDetailState extends State<PokemonDetail> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Padding(
-                                    padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                                    padding: EdgeInsets.only(left: 20.0, right: 20.0),
                                     child: Row(
                                       children: [
                                         Text(
-                                          'Nama Pokemon  :',
+                                          'Tinggi Pokemon  :',
                                           style: TextStyle(
                                             color: Colors.black,
                                             fontWeight: FontWeight.w400,
@@ -161,38 +179,8 @@ class _PokemonDetailState extends State<PokemonDetail> {
                                         ),
                                         SizedBox(width: 10.0,),
                                         Text(
-                                          'Charizard',
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 18,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              ),
-                              SizedBox(height: 15.0,),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 20.0, right: 20.0),
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          'Nama Pokemon  :',
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 18,
-                                          ),
-                                        ),
-                                        SizedBox(width: 10.0,),
-                                        Text(
-                                          'Charizard',
-                                          style: TextStyle(
+                                          '${pokemonHeight}0 Cm',
+                                          style: const TextStyle(
                                             color: Colors.black,
                                             fontWeight: FontWeight.w400,
                                             fontSize: 18,
