@@ -131,90 +131,105 @@ class _PokemonDetailState extends State<PokemonDetail> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                                  Expanded(
                                     child: Row(
                                       children: [
-                                        Text(
-                                          'Nama Pokemon  :',
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 18,
+                                        const Padding(
+                                          padding: EdgeInsets.only(left: 20.0),
+                                          child: const Text(
+                                            'Nama Pokemon  :',
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 18,
+                                            ),
                                           ),
                                         ),
-                                        SizedBox(width: 10.0,),
-                                        Text(
-                                          pokemonName,
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 18,
+                                        Spacer(),
+                                        Padding(
+                                          padding: EdgeInsets.only(right: 20.0),
+                                          child: Text(
+                                            pokemonName,
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 18,
+                                            ),
                                           ),
                                         ),
                                       ],
                                     ),
-                                  )
+                                  ),
                                 ],
                               ),
                               SizedBox(height: 15.0,),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                                  Expanded(
                                     child: Row(
                                       children: [
-                                        Text(
-                                          'Berat Pokemon  :',
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 18,
+                                        const Padding(
+                                          padding: EdgeInsets.only(left: 20.0),
+                                          child: Text(
+                                            'Berat Pokemon  :',
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 18,
+                                            ),
                                           ),
                                         ),
-                                        SizedBox(width: 10.0,),
-                                        Text(
-                                          '${pokemonWeight} pounds',
-                                          style: const TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 18,
+                                        Spacer(),
+                                        Padding(
+                                          padding: EdgeInsets.only(right: 20.0),
+                                          child: Text(
+                                            '${pokemonWeight} pounds',
+                                            style: const TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 18,
+                                            ),
                                           ),
                                         ),
                                       ],
                                     ),
-                                  )
+                                  ),
                                 ],
                               ),
                               SizedBox(height: 15.0,),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  Padding(
-                                    padding: EdgeInsets.only(left: 20.0, right: 20.0),
+                                  Expanded(
                                     child: Row(
                                       children: [
-                                        Text(
-                                          'Tinggi Pokemon  :',
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 18,
+                                        const Padding(
+                                        padding: EdgeInsets.only(left: 20.0),
+                                          child: Text(
+                                            'Tinggi Pokemon  :',
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 18,
+                                            ),
                                           ),
                                         ),
-                                        SizedBox(width: 10.0,),
-                                        Text(
-                                          '${pokemonHeight}0 Cm',
-                                          style: const TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 18,
-                                          ),
+                                        Spacer(),
+                                        Padding(
+                                          padding: EdgeInsets.only(right: 20.0),
+                                            child: Text(
+                                              '${pokemonHeight}0 cm',
+                                              style: const TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 18,
+                                              ),
+                                            ),
                                         ),
                                       ],
                                     ),
-                                  )
+                                  ),
                                 ],
                               ),
                               SizedBox(height: 15.0,),
